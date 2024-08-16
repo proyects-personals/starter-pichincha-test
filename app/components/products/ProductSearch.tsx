@@ -1,6 +1,8 @@
 import React from 'react';
 import { View, Text, FlatList, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import rightArrowImage from "../../../assets/icons/right-arrow.png";
+import PageWrapper from '../common/pages/PageWrapper';
+import SkeletonLoader from './SkeletonLoader';
 
 const styles = StyleSheet.create({
   container: {
@@ -44,13 +46,20 @@ interface Product {
 
 interface ProductListProps {
   products: Product[];
+  isLoading: boolean;
 }
 
-const ProductSearch: React.FC<ProductListProps> = ({ products }) => {
+const ProductSearch: React.FC<ProductListProps> = ({ products, isLoading }) => {
 
   const onItemPress = (id: string) => {
     console.log("Item pressed with ID:", id);
   };
+
+  if (isLoading) {
+    return (
+        <SkeletonLoader />
+    );
+  }
 
   return (
     <View style={styles.container}>
