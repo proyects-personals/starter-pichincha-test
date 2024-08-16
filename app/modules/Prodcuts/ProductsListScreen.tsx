@@ -1,14 +1,10 @@
-// ProductsListScreen.tsx
-import React, { useState } from 'react';
-import { View, StyleSheet } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, StyleSheet, ActivityIndicator, Text } from 'react-native';
 import PageWrapper from "@/app/components/common/pages/PageWrapper";
 import ProductSearch from "@/app/components/products/ProductSearch";
 import SearchBar from "@/app/components/search/SearchBar";
-
-interface Product {
-  id: string;
-  name: string;
-}
+import { useProducts } from '@/app/hooks/useProducts';
+import { ProductFinancial } from '@/app/interface/ProductFinancial';
 
 const styles = StyleSheet.create({
   container: {
@@ -19,22 +15,30 @@ const styles = StyleSheet.create({
   },
 });
 
-const allProducts: Product[] = [
-  { id: "1", name: "Producto 1" },
-  { id: "2", name: "Producto 2" },
-  { id: "123456", name: "Producto 3" },
-];
-
 const ProductsListScreen: React.FC = () => {
-  const [filteredProducts, setFilteredProducts] = useState<Product[]>(allProducts);
+  const [filteredProducts, setFilteredProducts] = useState<ProductFinancial[]>([]);
+  const { products, loading, error } = useProducts();
+
+  useEffect(() => {
+    if (products) {
+      setFilteredProducts(products);
+    }
+  }, [products]);
 
   const handleSearch = (query: string) => {
-    const filtered = allProducts.filter((product) =>
-      product.name.toLowerCase().includes(query.toLowerCase()) ||
-      product.id.toLowerCase().includes(query.toLowerCase())
-    );
-    setFilteredProducts(filtered);
+    if (query.trim() === '') {
+      setFilteredProducts(products);
+    } else {
+      const filtered = products.filter((product) =>
+        product.name.toLowerCase().includes(query.toLowerCase()) ||
+        product.id.toLowerCase().includes(query.toLowerCase())
+      );
+      setFilteredProducts(filtered);
+    }
   };
+
+  if (loading) return <ActivityIndicator size="large" color="#0000ff" />;
+  if (error) return <Text>{error}</Text>;
 
   return (
     <PageWrapper>
