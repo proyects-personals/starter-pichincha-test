@@ -9,6 +9,9 @@ import CustomButton from '@/app/components/common/custom/buttons/CustomButton';
 import { filterProducts } from '@/app/utils/filterProducts';
 import NoContent from '@/app/errors/NoContent';
 import ErrorScreen from '@/app/errors/ErrorScreen';
+import { AppNavigationProp } from '@/app/routes/types';
+import { useNavigation } from 'expo-router';
+import { RouteNames } from '@/app/enums/routeNames';
 
 const styles = StyleSheet.create({
   container: {
@@ -27,9 +30,10 @@ const styles = StyleSheet.create({
   },
 });
 
-const ProductsListScreen: React.FC = () => {
+const ListProductScreen: React.FC = () => {
   const [filteredProducts, setFilteredProducts] = useState<ProductFinancial[]>([]);
   const { products, loading, error } = useProducts();
+  const navigation: AppNavigationProp = useNavigation<AppNavigationProp>();
 
   useEffect(() => {
     if (products) {
@@ -44,6 +48,10 @@ const ProductsListScreen: React.FC = () => {
 
   if (error) return <ErrorScreen message='Tuvimos un error al obtener la información, intenta más tarde.' />;
 
+  const navigateCreateProduct = () =>{
+    navigation.navigate(RouteNames.createProduct);
+  }
+
   return (
     <PageWrapper>
       <View style={styles.container}>
@@ -55,11 +63,11 @@ const ProductsListScreen: React.FC = () => {
           <ProductSearch products={filteredProducts} isLoading={loading} />
         </View>
         <View style={styles.buttonContainer}>
-          <CustomButton title="Agregar" onPress={() => {/* Acción del botón */}} />
+          <CustomButton title="Agregar" onPress={navigateCreateProduct} textColor='#142958' />
         </View>
       </View>
     </PageWrapper>
   );
 };
 
-export default ProductsListScreen;
+export default ListProductScreen;

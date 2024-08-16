@@ -4,7 +4,8 @@ import { RouteNames } from '../enums/routeNames';
 import { createStackNavigator, StackNavigationOptions } from '@react-navigation/stack';
 import { NavigationScreens } from './types';
 import { getScreenOptions } from '../utils/getScreenOptions';
-import ProductsListScreen from '../modules/Products/ProductsListScreen';
+import ListProductScreen from '../modules/Products/ListProductScreen';
+import CreateProductScreen from '../modules/Products/CreateProductScreen';
 
 const Stack = createStackNavigator<NavigationScreens>();
 
@@ -14,7 +15,12 @@ const Routes: React.FC = () => {
     <Stack.Navigator screenOptions={screenOptions}>
       <Stack.Screen
         name={RouteNames.ListProduct}
-        component={ProductsListScreen}
+        component={ListProductScreen}
+        options={getCustomHeaderOptions("BANCO")}
+      />
+      <Stack.Screen
+        name={RouteNames.createProduct}
+        component={CreateProductScreen}
         options={getCustomHeaderOptions("BANCO")}
       />
     </Stack.Navigator>
