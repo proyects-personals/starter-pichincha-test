@@ -4,7 +4,7 @@ import { RouteNames } from '../enums/routeNames';
 import { createStackNavigator, StackNavigationOptions } from '@react-navigation/stack';
 import { NavigationScreens } from './types';
 import { getScreenOptions } from '../utils/getScreenOptions';
-import ProductsListScreen from '../modules/Prodcuts/ProductsListScreen';
+import ProductsListScreen from '../modules/Products/ProductsListScreen';
 
 const Stack = createStackNavigator<NavigationScreens>();
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, ActivityIndicator, Text } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import PageWrapper from "@/app/components/common/pages/PageWrapper";
 import ProductSearch from "@/app/components/products/ProductSearch";
 import SearchBar from "@/app/components/search/SearchBar";
@@ -49,7 +49,7 @@ const ProductsListScreen: React.FC = () => {
       <View style={styles.container}>
         <View style={{ height: '90%' }}>
           <SearchBar onSearch={handleSearch} />
-          {filteredProducts.length === 0 && (
+          {loading  || filteredProducts.length === 0 && (
             <NoContent message='No existe el producto' />
           )}
           <ProductSearch products={filteredProducts} isLoading={loading} />
