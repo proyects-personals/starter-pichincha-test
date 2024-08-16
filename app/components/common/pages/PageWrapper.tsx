@@ -7,7 +7,7 @@ export const styles = StyleSheet.create({
     backgroundColor: 'white'
   },
   margin:{
-    marginHorizontal: 32
+    marginHorizontal: 20
   }
 });
 

@@ -9,6 +9,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     height: 60,
     backgroundColor: "white",
+    borderBottomWidth: 1,
+    borderBottomColor: "#e0e0e0",
   },
   icon: {
     padding: 10,
@@ -26,17 +28,17 @@ const styles = StyleSheet.create({
 });
 
 interface CustomHeaderProps {
-    title: string;
-    style?: StyleProp<ViewStyle>;
-  }
+  title: string;
+  style?: StyleProp<ViewStyle>;
+}
 
-  const HeaderCustom: React.FC<CustomHeaderProps> = ({ title, style }) => {
-    return (
-      <View style={styles.headerContainer}>
-        <Text style={styles.headerText}>{title}</Text>
-        <View style={styles.iconPlaceholder} />
-      </View>
-    );
-  };
+const HeaderCustom: React.FC<CustomHeaderProps> = ({ title, style }) => {
+  return (
+    <View style={[styles.headerContainer, style]}>
+      <Text style={styles.headerText}>{title}</Text>
+      <View style={styles.iconPlaceholder} />
+    </View>
+  );
+};
 
 export default HeaderCustom;
