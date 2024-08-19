@@ -104,7 +104,7 @@ const UpdateProductScreen = () => {
         />
         <CustomButton
           title="Eliminar"
-          backgroundColor="red"
+          backgroundColor="#D50707"
           textColor="white"
           onPress={deleteProduct}
         />

@@ -1,29 +1,33 @@
 import React from "react";
-import { View, Text, StyleSheet, StyleProp, ViewStyle } from "react-native";
+import { View, Text, StyleSheet, StyleProp, ViewStyle, Image } from "react-native";
+import tarjetImage from "../../../assets/icons/tarjeta-de-credito.png";
 
 const styles = StyleSheet.create({
   headerContainer: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between",
-    paddingHorizontal: 16,
+    justifyContent: "center",
+    backgroundColor: 'white',
     height: 60,
-    backgroundColor: "white",
     borderBottomWidth: 1,
     borderBottomColor: "#e0e0e0",
-  },
-  icon: {
-    padding: 10,
+    paddingHorizontal: 16,
   },
   headerText: {
     fontSize: 14,
     color: "#314573",
     fontWeight: "bold",
     textAlign: "center",
-    flex: 1,
+    marginHorizontal: 8,
   },
   iconPlaceholder: {
     width: 24,
+  },
+  logoImage: {
+    width: 24,  
+    height: 24,
+    resizeMode: 'contain',
+    tintColor: '#314573',
   },
 });
 
@@ -35,6 +39,7 @@ interface CustomHeaderProps {
 const HeaderCustom: React.FC<CustomHeaderProps> = ({ title, style }) => {
   return (
     <View style={[styles.headerContainer, style]}>
+      <Image source={tarjetImage} style={styles.logoImage} />
       <Text style={styles.headerText}>{title}</Text>
       <View style={styles.iconPlaceholder} />
     </View>
