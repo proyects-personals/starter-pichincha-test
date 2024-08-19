@@ -49,55 +49,50 @@ export const validateId = async (id: string): Promise<string | null> => {
     return "";
   };
   
-  export const validateReleaseDate = (releaseDate: string) => {
-    if (!releaseDate) {
-      return "Este campo es requerido!";
-    }
-  
-    const releaseDateObj = parseDate(releaseDate); // Convierte el string a Date correctamente
-    const today = new Date();
-    today.setHours(0, 0, 0, 0); // Asegura que se compara solo la fecha, sin horas
-  
-    if (isNaN(releaseDateObj.getTime())) {
-      return "La fecha de liberación no es válida.";
-    }
-    if (releaseDateObj < today) {
-      return "La fecha de liberación debe ser igual o mayor a la fecha actual.";
-    }
-  
-    return "";
-  };
-  
-  export const validateReviewDate = (reviewDate: string, releaseDate: string) => {
-    if (!reviewDate) {
-      return "Este campo es requerido!";
-    }
-  
-    const reviewDateObj = parseDate(reviewDate);
-    const releaseDateObj = parseDate(releaseDate);
-  
-    if (isNaN(reviewDateObj.getTime()) || isNaN(releaseDateObj.getTime())) {
-      return "La fecha de revisión o liberación no es válida.";
-    }
-  
-    // Calcula la fecha exacta un año después de la liberación
-    const oneYearLater = new Date(releaseDateObj);
-    oneYearLater.setFullYear(oneYearLater.getFullYear() + 1);
-    if (
-      reviewDateObj.getDate() !== oneYearLater.getDate() ||
-      reviewDateObj.getMonth() !== oneYearLater.getMonth() ||
-      reviewDateObj.getFullYear() !== oneYearLater.getFullYear()
-    ) {
-      return "La fecha de revisión debe ser exactamente un año posterior a la fecha de liberación.";
-    }
-  
-    return "";
-  };
-  
-  export const formatDate = (date: Date): string => {
-    const day = String(date.getDate()).padStart(2, "0");
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const year = date.getFullYear();
-    return `${year}-${month}-${day}`;
-  };
-  
+
+export const validateReleaseDate = (releaseDate: string): string => {
+  if (!releaseDate) {
+    return "Este campo es requerido!";
+  }
+
+  const releaseDateObj = parseDate(releaseDate);
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  console.log(releaseDate);
+
+  if (isNaN(releaseDateObj.getTime())) {
+    return "La fecha de liberación no es válida.";
+  }
+  if (releaseDateObj < today) {
+    return "La fecha de liberación debe ser igual o mayor a la fecha actual.";
+  }
+
+  return "";
+};
+
+export const validateReviewDate = (reviewDate: string, releaseDate: string): string => {
+  if (!reviewDate) {
+    return "Este campo es requerido!";
+  }
+
+  const reviewDateObj = parseDate(reviewDate);
+  const releaseDateObj = parseDate(releaseDate);
+
+  if (isNaN(reviewDateObj.getTime()) || isNaN(releaseDateObj.getTime())) {
+    return "La fecha de revisión o liberación no es válida.";
+  }
+
+  const oneYearLater = new Date(releaseDateObj);
+  oneYearLater.setFullYear(oneYearLater.getFullYear() + 1);
+
+  if (
+    reviewDateObj.getDate() !== oneYearLater.getDate() ||
+    reviewDateObj.getMonth() !== oneYearLater.getMonth() ||
+    reviewDateObj.getFullYear() !== oneYearLater.getFullYear()
+  ) {
+    return "La fecha de revisión debe ser exactamente un año posterior a la fecha de liberación.";
+  }
+
+  return "";
+};

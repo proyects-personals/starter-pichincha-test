@@ -6,6 +6,7 @@ export type NavigationScreens = {
   [RouteNames.ListProduct]: undefined;
   [RouteNames.createProduct]: undefined;
   [RouteNames.updateProduct]: { product: ProductFinancial };
+  [RouteNames.updateByIdProduct]:  { product: ProductFinancial };
 };
 
 export type AppNavigationProp = NavigationProp<NavigationScreens>;

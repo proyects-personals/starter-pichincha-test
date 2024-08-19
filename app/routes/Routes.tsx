@@ -29,6 +29,11 @@ const Routes: React.FC = () => {
         component={UpdateProductScreen}
         options={getCustomHeaderOptions("BANCO")}
       />
+       <Stack.Screen
+        name={RouteNames.updateByIdProduct}
+        component={CreateProductScreen}
+        options={getCustomHeaderOptions("BANCO")}
+      />
     </Stack.Navigator>
   );
 };

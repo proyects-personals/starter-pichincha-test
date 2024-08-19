@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { deleteProduct } from '../services/productService'; // Ajusta la ruta según tu estructura de proyecto
+import { deleteProduct } from '../services/productService';
 
 export const useDeleteProduct = () => {
   const [loading, setLoading] = useState<boolean>(false);

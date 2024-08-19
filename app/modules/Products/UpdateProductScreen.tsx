@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import PageWrapper from '@/app/components/common/pages/PageWrapper';
 import { AppNavigationProp, NavigationScreens } from '@/app/routes/types';
@@ -7,9 +7,9 @@ import { RouteNames } from '@/app/enums/routeNames';
 import ProductInfoRow from '@/app/components/products/ProductInfoRow';
 import ProductLogo from '@/app/components/products/ProductLogo';
 import CustomButton from '@/app/components/common/custom/buttons/CustomButton';
-import { formatDateString } from '@/app/utils/formatDate';
 import ConfirmationModal from '@/app/components/products/ConfirmationModal';
-import { useDeleteProduct } from '@/app/hooks/useDeleteProduct'; // Ajusta la ruta según tu estructura de proyecto
+import { useDeleteProduct } from '@/app/hooks/useDeleteProduct';
+import { formatDateToUser } from '@/app/utils/formatDate';
 
 const styles = StyleSheet.create({
   container: {
@@ -73,8 +73,9 @@ const UpdateProductScreen = () => {
   };
 
   const navigateUpdateProduct = () => {
-    console.log('navigate update product');
+    navigation.navigate(RouteNames.updateByIdProduct, { product: product });
   };
+  
 
   return (
     <PageWrapper>
@@ -87,11 +88,11 @@ const UpdateProductScreen = () => {
         <ProductLogo logoUri={product.logo} />
         <ProductInfoRow
           label="Fecha Liberación:"
-          value={formatDateString(product.date_release)}
+          value={formatDateToUser(product.date_release)}
         />
         <ProductInfoRow
           label="Fecha Revisión:"
-          value={formatDateString(product.date_revision)}
+          value={formatDateToUser(product.date_revision)}
         />
       </View>
       <View style={styles.buttonContainer}>

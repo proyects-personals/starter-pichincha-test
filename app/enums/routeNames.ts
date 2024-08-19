@@ -1,5 +1,6 @@
 export enum RouteNames {
     ListProduct = 'Lista de Productos',
     createProduct = 'Formulario de Registro',
-    updateProduct = 'UpdateProductScreen',
+    updateProduct = 'Ver producto Id',
+    updateByIdProduct = 'Actualiza producto',
   }

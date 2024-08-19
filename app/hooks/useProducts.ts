@@ -7,10 +7,9 @@ export const useProducts = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Función para obtener productos
   const fetchProducts = useCallback(async () => {
     setLoading(true);
-    setError(null); // Limpiar errores anteriores antes de hacer la solicitud
+    setError(null);
     try {
       const data = await getProducts();
       setProducts(data);
@@ -21,11 +20,9 @@ export const useProducts = () => {
     }
   }, []);
 
-  // Inicializar la carga de productos al montar el componente
   useEffect(() => {
     fetchProducts();
   }, [fetchProducts]);
 
-  // Devolver los productos, estados de carga, error y la función de refresco
   return { products, loading, error, refetch: fetchProducts };
 };
