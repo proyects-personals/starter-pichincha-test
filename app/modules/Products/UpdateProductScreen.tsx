@@ -7,11 +7,7 @@ import { RouteNames } from "@/app/enums/routeNames";
 import ProductInfoRow from "@/app/components/products/ProductInfoRow";
 import ProductLogo from "@/app/components/products/ProductLogo";
 import CustomButton from "@/app/components/common/custom/buttons/CustomButton";
-
-const formatDate = (dateString: string) => {
-  const date = new Date(dateString);
-  return date.toISOString().split("T")[0];
-};
+import { formatDateString } from "@/app/utils/formatDate";
 
 const styles = StyleSheet.create({
   container: {
@@ -67,11 +63,11 @@ const UpdateProductScreen = () => {
         <ProductLogo logoUri={product.logo} />
         <ProductInfoRow
           label="Fecha Liberación:"
-          value={formatDate(product.date_release)}
+          value={formatDateString(product.date_release)}
         />
         <ProductInfoRow
           label="Fecha Revisión:"
-          value={formatDate(product.date_revision)}
+          value={formatDateString(product.date_revision)}
         />
       </View>
       <View style={styles.buttonContainer}>

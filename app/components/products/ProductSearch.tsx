@@ -8,7 +8,7 @@ import { RouteNames } from '@/app/enums/routeNames';
 import { ProductFinancial } from '@/app/interface/ProductFinancial';
 import NoContent from '@/app/errors/NoContent';
 
-const { height } = Dimensions.get('window'); // Obtén la altura de la pantalla
+const { height } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   container: {
@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
     height: 10,
   },
   listContainer: {
-    minHeight: Math.min(height * 0.6, 6 * 60), // Ajusta la altura mínima (60 es una estimación del alto del ítem)
+    minHeight: Math.min(height * 0.6, 6 * 60),
   },
 });
 
@@ -58,7 +58,6 @@ const ProductSearch: React.FC<ProductListProps> = ({ products, isLoading }) => {
 
   const onItemPress = (product: ProductFinancial) => {
     navigation.navigate(RouteNames.updateProduct, { product });
-    console.log(product);
   };
 
   if (isLoading) {
