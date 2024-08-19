@@ -83,15 +83,15 @@ const UpdateProductScreen = () => {
       <Text style={styles.label}>Información extra</Text>
 
       <View style={styles.containerInformation}>
-        <ProductInfoRow label="Nombre:" value={product.name} />
-        <ProductInfoRow label="Descripción:" value={product.description} />
+        <ProductInfoRow label="Nombre" value={product.name} />
+        <ProductInfoRow label="Descripción" value={product.description} />
         <ProductLogo logoUri={product.logo} />
         <ProductInfoRow
-          label="Fecha Liberación:"
+          label="Fecha Liberación"
           value={formatDateToUser(product.date_release)}
         />
         <ProductInfoRow
-          label="Fecha Revisión:"
+          label="Fecha Revisión"
           value={formatDateToUser(product.date_revision)}
         />
       </View>

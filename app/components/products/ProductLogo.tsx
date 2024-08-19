@@ -21,7 +21,7 @@ interface ProductLogoProps {
 
 const ProductLogo: React.FC<ProductLogoProps> = ({ logoUri }) => (
   <View style={styles.logoContainer}>
-    <Text style={styles.label}>Logo:</Text>
+    <Text style={styles.label}>Logo</Text>
     <View style={{ justifyContent: 'center', alignItems: 'center' }}>
       <Image source={{ uri: logoUri }} style={styles.logoImage} />
     </View>
