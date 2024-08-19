@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { validateDescription, validateId, validateLogo, validateName, validateReleaseDate, validateReviewDate } from "@/app/utils/formValidations";
 import { ProductFinancial } from "@/app/interface/ProductFinancial";
 import { useCreateProduct } from "@/app/hooks/useCreateProduct";
@@ -21,6 +21,18 @@ export const useProductForm = (product?: ProductFinancial) => {
   const { updateProductById, loading: loadingUpdate } = useUpdateProduct();
   const isEditing = !!product;
 
+  const resetForm = useCallback(() => {
+    setFormData({
+      id: initialId,
+      name: "",
+      description: "",
+      logo: "",
+      date_release: "",
+      date_revision: "",
+    });
+    setErrors({});
+  }, [initialId]);
+  
   useEffect(() => {
     if (product) {
       setFormData({
@@ -32,7 +44,7 @@ export const useProductForm = (product?: ProductFinancial) => {
     } else {
       resetForm();
     }
-  }, [product]);
+  }, [product, resetForm]);
 
   const handleChange = (name: keyof ProductFinancial, value: string) => {
     setFormData((prevState) => ({ ...prevState, [name]: value }));
@@ -77,18 +89,6 @@ export const useProductForm = (product?: ProductFinancial) => {
     } catch (error) {
       console.error("Error handling product", error);
     }
-  };
-
-  const resetForm = () => {
-    setFormData({
-      id: initialId,
-      name: "",
-      description: "",
-      logo: "",
-      date_release: "",
-      date_revision: "",
-    });
-    setErrors({});
   };
 
   return {

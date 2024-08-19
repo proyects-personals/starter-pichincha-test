@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
-    logoContainer: {
+  container: {
       flexDirection: 'column',
     },
     logoImage: {
@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
       height: 100,
       resizeMode: 'contain',
     },
-    label: {
+    logoText: {
       color: '#9E9EA1',
     },
   });
@@ -19,13 +19,12 @@ interface ProductLogoProps {
   logoUri: string;
 }
 
-const ProductLogo: React.FC<ProductLogoProps> = ({ logoUri }) => (
-  <View style={styles.logoContainer}>
-    <Text style={styles.label}>Logo</Text>
-    <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-      <Image source={{ uri: logoUri }} style={styles.logoImage} />
+const ProductLogo: React.FC<ProductLogoProps> = ({ logoUri }) => {
+  return (
+    <View style={styles.container}>
+      <Text style={styles.logoText}>Logo</Text>
+      <Image source={{ uri: logoUri }} style={styles.logoImage} testID="logo-image" />
     </View>
-  </View>
-);
-
+  );
+};
 export default ProductLogo;
