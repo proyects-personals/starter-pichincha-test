@@ -38,3 +38,15 @@ export const updateProduct = async (product: ProductFinancial) => {
     throw new Error('Error updating product: ' + (error as Error).message);
   }
 };
+
+export const deleteProduct = async (id: string): Promise<void> => {
+  try {
+    await axiosInstance.delete('/bp/products', {
+      params: {
+        id: id,
+      },
+    });
+  } catch (error) {
+    throw new Error('Error deleting product: ' + (error as Error).message);
+  }
+};

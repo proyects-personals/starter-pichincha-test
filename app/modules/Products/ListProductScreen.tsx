@@ -11,6 +11,7 @@ import ErrorScreen from "@/app/errors/ErrorScreen";
 import { AppNavigationProp } from "@/app/routes/types";
 import { useNavigation } from "expo-router";
 import { RouteNames } from "@/app/enums/routeNames";
+import { useFocusEffect } from '@react-navigation/native'; // Importar el hook
 
 const styles = StyleSheet.create({
   container: {
@@ -30,14 +31,20 @@ const ListProductScreen: React.FC = () => {
   const [filteredProducts, setFilteredProducts] = useState<ProductFinancial[]>(
     []
   );
-  const { products, loading, error } = useProducts();
-  const navigation: AppNavigationProp = useNavigation<AppNavigationProp>();
+  const { products, loading, error, refetch } = useProducts(); // Asegúrate de que `useProducts` tenga una función `refetch`
+  const navigation = useNavigation<AppNavigationProp>();
 
   useEffect(() => {
     if (products) {
       setFilteredProducts(products);
     }
   }, [products]);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      refetch(); // Refresca los datos cuando la pantalla recibe el enfoque
+    }, [refetch])
+  );
 
   const handleSearch = (query: string) => {
     const result = filterProducts(products, query);

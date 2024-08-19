@@ -1,17 +1,19 @@
-import React from "react";
-import { View, Text, StyleSheet } from "react-native";
-import { RouteProp, useRoute } from "@react-navigation/native";
-import PageWrapper from "@/app/components/common/pages/PageWrapper";
-import { NavigationScreens } from "@/app/routes/types";
-import { RouteNames } from "@/app/enums/routeNames";
-import ProductInfoRow from "@/app/components/products/ProductInfoRow";
-import ProductLogo from "@/app/components/products/ProductLogo";
-import CustomButton from "@/app/components/common/custom/buttons/CustomButton";
-import { formatDateString } from "@/app/utils/formatDate";
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
+import PageWrapper from '@/app/components/common/pages/PageWrapper';
+import { AppNavigationProp, NavigationScreens } from '@/app/routes/types';
+import { RouteNames } from '@/app/enums/routeNames';
+import ProductInfoRow from '@/app/components/products/ProductInfoRow';
+import ProductLogo from '@/app/components/products/ProductLogo';
+import CustomButton from '@/app/components/common/custom/buttons/CustomButton';
+import { formatDateString } from '@/app/utils/formatDate';
+import ConfirmationModal from '@/app/components/products/ConfirmationModal';
+import { useDeleteProduct } from '@/app/hooks/useDeleteProduct'; // Ajusta la ruta según tu estructura de proyecto
 
 const styles = StyleSheet.create({
   container: {
-    height: "100%",
+    height: '100%',
     marginBottom: 0,
     marginVertical: 30,
   },
@@ -21,35 +23,57 @@ const styles = StyleSheet.create({
   containerInformation: {
     marginTop: 30,
     flex: 2,
-    justifyContent: "space-between",
+    justifyContent: 'space-between',
   },
   id: {
     fontSize: 24,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     marginBottom: 5,
   },
   label: {
-    color: "#9E9EA1",
+    color: '#9E9EA1',
   },
   buttonContainer: {
-    justifyContent: "flex-end",
-    alignItems: "flex-end",
+    justifyContent: 'flex-end',
+    alignItems: 'flex-end',
     flex: 1,
     gap: 10,
+  },
+  loading: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 
 const UpdateProductScreen = () => {
-  const route =
-    useRoute<RouteProp<NavigationScreens, RouteNames.updateProduct>>();
+  const route = useRoute<RouteProp<NavigationScreens, RouteNames.updateProduct>>();
+  const navigation: AppNavigationProp = useNavigation<AppNavigationProp>();
   const { product } = route.params;
+  const [modalVisible, setModalVisible] = useState(false);
+  const { deleteProductById, loading } = useDeleteProduct();
 
   const deleteProduct = () => {
-    console.log("delete product|");
+    setModalVisible(true);
+  };
+
+  const confirmDelete = async () => {
+    try {
+      await deleteProductById(product.id);
+      navigation.navigate(RouteNames.ListProduct);
+    } catch (err) {
+      console.error('Error deleting product:', err);
+    } finally {
+      setModalVisible(false);
+    }
+  };
+
+  const cancelDelete = () => {
+    setModalVisible(false);
   };
 
   const navigateUpdateProduct = () => {
-    console.log("navigate update product");
+    console.log('navigate update product');
   };
 
   return (
@@ -84,6 +108,14 @@ const UpdateProductScreen = () => {
           onPress={deleteProduct}
         />
       </View>
+
+      <ConfirmationModal
+        visible={modalVisible}
+        onConfirm={confirmDelete}
+        onCancel={cancelDelete}
+        productName={product.name}
+        isLoading={loading}
+      />
     </PageWrapper>
   );
 };
