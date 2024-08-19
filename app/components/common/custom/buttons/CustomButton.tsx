@@ -1,11 +1,17 @@
-import React, { ReactNode }from "react";
-import { TouchableOpacity, Text, StyleSheet, ViewStyle, TextStyle } from "react-native";
+import React, { ReactNode } from "react";
+import {
+  TouchableOpacity,
+  Text,
+  StyleSheet,
+  ViewStyle,
+  TextStyle,
+  ActivityIndicator,
+} from "react-native";
 
 const styles = StyleSheet.create({
   button: {
     width: "100%",
     height: 50,
-    paddingVertical: 10,
     borderRadius: 5,
     alignItems: "center",
     justifyContent: "center",
@@ -15,10 +21,10 @@ const styles = StyleSheet.create({
     textTransform: "capitalize",
   },
   disabledButton: {
-    backgroundColor: "#d3d3d3", // Color gris para el botón deshabilitado
+    backgroundColor: "#d3d3d3",
   },
   disabledText: {
-    color: "#a9a9a9", // Color gris para el texto del botón deshabilitado
+    color: "#a9a9a9",
   },
 });
 
@@ -28,6 +34,7 @@ interface CustomButtonProps {
   backgroundColor?: string;
   textColor?: string;
   disabled?: boolean;
+  loading?: boolean;
   children?: ReactNode;
 }
 
@@ -37,7 +44,8 @@ const CustomButton: React.FC<CustomButtonProps> = ({
   backgroundColor = "#FFDD00",
   textColor = "black",
   disabled = false,
-  children
+  loading = false,
+  children,
 }) => {
   const buttonStyle: ViewStyle = {
     ...styles.button,
@@ -49,13 +57,22 @@ const CustomButton: React.FC<CustomButtonProps> = ({
     color: disabled ? "#a9a9a9" : textColor,
   };
 
+  let content;
+  if (loading) {
+    content = <ActivityIndicator size="small" color={textColor} />;
+  } else if (children) {
+    content = children;
+  } else {
+    content = <Text style={buttonTextStyle}>{title}</Text>;
+  }
+
   return (
     <TouchableOpacity
       style={buttonStyle}
-      onPress={disabled ? undefined : onPress}
-      disabled={disabled}
+      onPress={disabled || loading ? undefined : onPress}
+      disabled={disabled || loading}
     >
-      {children ? children : <Text style={buttonTextStyle}>{title}</Text>}
+      {content}
     </TouchableOpacity>
   );
 };

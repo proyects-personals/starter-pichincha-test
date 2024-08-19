@@ -4,11 +4,14 @@ import React from 'react';
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'column',
-    backgroundColor: 'white'
+    backgroundColor: 'white',
   },
   margin:{
-    marginHorizontal: 20
+    marginTop:50,
+    marginBottom:10,
+    marginHorizontal: 20,
+    flex: 1,
+    flexDirection: 'column',
   }
 });
 

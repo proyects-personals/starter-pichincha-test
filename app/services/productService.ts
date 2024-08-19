@@ -12,7 +12,6 @@ export const getProducts = async () => {
 
 export const createProduct = async (product: ProductFinancial) => {
   try {
-    console.log('product service:', product);
     const response = await axiosInstance.post('/bp/products', product);
     return response.data;
   } catch (error) {
@@ -25,8 +24,17 @@ export const verifyProductId = async (id: string): Promise<boolean> => {
     const response = await axiosInstance.get('/bp/products/verification', {
       params: { id },
     });
-    return response.data; // true si el ID existe, false si no existe
+    return response.data;
   } catch (error) {
     throw new Error('Error verifying product ID: ' + (error as Error).message);
+  }
+};
+
+export const updateProduct = async (product: ProductFinancial) => {
+  try {
+    const response = await axiosInstance.put('/bp/products', product);
+    return response.data;
+  } catch (error) {
+    throw new Error('Error updating product: ' + (error as Error).message);
   }
 };

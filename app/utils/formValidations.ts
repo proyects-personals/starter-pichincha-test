@@ -104,3 +104,8 @@ export const validateId = async (id: string): Promise<string | null> => {
     const [year, month, day] = dateString.split("-").map(Number);
     return new Date(year, month - 1, day);
   };
+
+  // const formatDate = (dateString: string) => {
+  //   const date = new Date(dateString);
+  //   return date.toISOString().split('T')[0];
+  // }

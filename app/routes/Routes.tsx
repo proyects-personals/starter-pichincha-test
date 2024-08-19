@@ -6,6 +6,7 @@ import { NavigationScreens } from './types';
 import { getScreenOptions } from '../utils/getScreenOptions';
 import ListProductScreen from '../modules/Products/ListProductScreen';
 import CreateProductScreen from '../modules/Products/CreateProductScreen';
+import UpdateProductScreen from '../modules/Products/UpdateProductScreen';
 
 const Stack = createStackNavigator<NavigationScreens>();
 
@@ -21,6 +22,11 @@ const Routes: React.FC = () => {
       <Stack.Screen
         name={RouteNames.createProduct}
         component={CreateProductScreen}
+        options={getCustomHeaderOptions("BANCO")}
+      />
+      <Stack.Screen
+        name={RouteNames.updateProduct}
+        component={UpdateProductScreen}
         options={getCustomHeaderOptions("BANCO")}
       />
     </Stack.Navigator>

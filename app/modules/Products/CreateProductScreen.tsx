@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, ScrollView, ActivityIndicator } from "react-native";
+import { View, Text, StyleSheet, ScrollView } from "react-native";
 import PageWrapper from "@/app/components/common/pages/PageWrapper";
 import { RouteNames } from "@/app/enums/routeNames";
 import { useNavigation } from "@react-navigation/native";
@@ -81,7 +81,6 @@ const CreateProductScreen = () => {
 
   const createProduct = async () => {
     try {
-      console.log("Creating Product", formData);
       await handleCreateProduct(formData);
       navigation.navigate(RouteNames.ListProduct);
     } catch (error) {
@@ -101,8 +100,6 @@ const CreateProductScreen = () => {
     setErrors({});
   };
 
-  const isDisabled =  loading;
-
   return (
     <PageWrapper>
       <ScrollView contentContainerStyle={styles.container}>
@@ -112,50 +109,55 @@ const CreateProductScreen = () => {
           name="ID"
           value={formData.id}
           onChangeText={(text) => handleChangeText("id", text)}
-          error={errors.id || undefined}
+          error={errors.id ?? undefined}
         />
         <FormInput
           name="Nombre"
           value={formData.name}
           onChangeText={(text) => handleChangeText("name", text)}
-          error={errors.name || undefined}
+          error={errors.name ?? undefined}
         />
         <FormInput
           name="Descripción"
           value={formData.description}
           onChangeText={(text) => handleChangeText("description", text)}
-          error={errors.description || undefined}
+          error={errors.description ?? undefined}
         />
         <FormInput
           name="Logo"
           value={formData.logo}
           onChangeText={(text) => handleChangeText("logo", text)}
-          error={errors.logo || undefined}
+          error={errors.logo ?? undefined}
         />
         <FormInput
           name="Fecha Liberación"
           value={formData.date_release}
           onChangeText={(text) => handleChangeText("date_release", text)}
-          error={errors.date_release || undefined}
+          error={errors.date_release ?? undefined}
           isDate
         />
         <FormInput
           name="Fecha Revisión"
           value={formData.date_revision}
           onChangeText={(text) => handleChangeText("date_revision", text)}
-          error={errors.date_revision || undefined}
+          error={errors.date_revision ?? undefined}
           isDate
         />
 
         <View style={styles.buttonContainer}>
-          {loading ? (
-            <ActivityIndicator size="small" color="#142958" />
-          ) : (
-            <>
-              <CustomButton title="Crear Producto" onPress={createProduct} />
-              <CustomButton title="Limpiar" onPress={limpiar} />
-            </>
-          )}
+          <CustomButton
+            title="Enviar"
+            textColor="#253A6B"
+            onPress={createProduct}
+            loading={loading}
+          />
+          <CustomButton
+            title="Reiniciar"
+            backgroundColor="#E9ECF3"
+            textColor="#253A6B"
+            onPress={limpiar}
+            disabled={loading}
+          />
         </View>
       </ScrollView>
     </PageWrapper>

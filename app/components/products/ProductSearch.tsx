@@ -1,8 +1,14 @@
 import React from 'react';
-import { View, Text, FlatList, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { View, Text, FlatList, StyleSheet, TouchableOpacity, Image, Dimensions } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import rightArrowImage from "../../../assets/icons/right-arrow.png";
-import PageWrapper from '../common/pages/PageWrapper';
 import SkeletonLoader from './SkeletonLoader';
+import { AppNavigationProp } from '@/app/routes/types';
+import { RouteNames } from '@/app/enums/routeNames';
+import { ProductFinancial } from '@/app/interface/ProductFinancial';
+import NoContent from '@/app/errors/NoContent';
+
+const { height } = Dimensions.get('window'); // Obtén la altura de la pantalla
 
 const styles = StyleSheet.create({
   container: {
@@ -37,45 +43,49 @@ const styles = StyleSheet.create({
     width: 10,
     height: 10,
   },
+  listContainer: {
+    minHeight: Math.min(height * 0.6, 6 * 60), // Ajusta la altura mínima (60 es una estimación del alto del ítem)
+  },
 });
 
-interface Product {
-  id: string;
-  name: string;
-}
-
 interface ProductListProps {
-  products: Product[];
+  products: ProductFinancial[];
   isLoading: boolean;
 }
 
 const ProductSearch: React.FC<ProductListProps> = ({ products, isLoading }) => {
+  const navigation = useNavigation<AppNavigationProp>();
 
-  const onItemPress = (id: string) => {
-    console.log("Item pressed with ID:", id);
+  const onItemPress = (product: ProductFinancial) => {
+    navigation.navigate(RouteNames.updateProduct, { product });
+    console.log(product);
   };
 
   if (isLoading) {
-    return (
-        <SkeletonLoader />
-    );
+    return <SkeletonLoader />;
   }
 
   return (
     <View style={styles.container}>
-      <FlatList
-        data={products}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <TouchableOpacity style={styles.item} onPress={() => onItemPress(item.id)}>
-            <View style={styles.content}>
-              <Text style={styles.name}>{item.name}</Text>
-              <Text style={styles.id}>ID: {item.id}</Text>
-            </View>
-            <Image source={rightArrowImage} style={styles.icon} tintColor="#888" />
-          </TouchableOpacity>
-        )}
-      />
+      <View style={styles.listContainer}>
+      {isLoading ||
+          (products.length === 0 && (
+            <NoContent message="No existe el producto" />
+          ))}
+        <FlatList
+          data={products}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => (
+            <TouchableOpacity style={styles.item} onPress={() => onItemPress(item)}>
+              <View style={styles.content}>
+                <Text style={styles.name}>{item.name}</Text>
+                <Text style={styles.id}>ID: {item.id}</Text>
+              </View>
+              <Image source={rightArrowImage} style={styles.icon} tintColor="#888" />
+            </TouchableOpacity>
+          )}
+        />
+      </View>
     </View>
   );
 };
